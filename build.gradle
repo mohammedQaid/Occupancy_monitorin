@@ -1,0 +1,40 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath "com.github.jengelman.gradle.plugins:shadow:1.2.3"    
+  }
+}
+
+
+apply plugin: 'com.github.johnrengelman.shadow'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+mainClassName ="de.uni_stuttgart.ipvs.occpancy_monitoring.Library"
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'de.uni_stuttgart.ipvs.occpancy_monitoring.Library'
+    }
+}
+dependencies {
+    runtime group: 'mysql', name: 'mysql-connector-java', version: '6.0.4'
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    testCompile 'junit:junit:4.12'
+    compile group: 'org.json', name: 'json', version: '20160212'
+
+
+    
+}
+
+shadowJar {
+ transform(com.github.jengelman.gradle.plugins.shadow.transformers.AppendingTransformer) {
+ }
+}
